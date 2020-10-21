@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="250.61" height="100" viewBox="0 0 250.61 100">
+  <g id="Groupe_2" data-name="Groupe 2" transform="translate(-7 -34)">
+    <text id="Dev" transform="translate(7 120)" fill="#08b2e3" font-size="55" font-family="Montserrat-Regular, Montserrat"><tspan x="0" y="0">Dev</tspan></text>
+    <text id="Fastoche" transform="translate(42 84)" fill="#212738" font-size="55" font-family="InkFree, Ink Free"><tspan x="0" y="0">Fastoche</tspan></text>
+    <path id="Tracé_1" data-name="Tracé 1" d="M120,96h96V88l40,24H112Z" transform="translate(-2 1)" fill="#ee6352" stroke="#ee6352" stroke-width="2"/>
+  </g>
+</svg>
