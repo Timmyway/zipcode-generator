@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Zipcode utility</title>
+	<link rel="icon" href="./favicon.ico" sizes="16x16" />
 	<link rel="stylesheet" href="./static/css/bulma.min.css">
 	<!-- development version, includes helpful console warnings -->	
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -18,25 +19,30 @@
 			<span :class="['tag', filteredFormated.length > 0 ? 'is-success' : 'is-warning', shake ? 'animate__animated animate__wobble' : '']">Found: {{ filteredFormated.length }}</span>			
 		</div>
 		<div style="max-width: 90%">
-			<div class="columns mt-2">
-				<div class="column">
-					<input class="input" type="number" placeholder="From" v-model="rangeNumber.from" min="0" max="99">
-				</div>
-				<div class="column">
-					<input class="input" type="number" placeholder="To" v-model="rangeNumber.to"  min="0" max="99">
-				</div>
+			<div class="mt-2 is-flex">
 				<div class="sidebar--left" style="position: fixed; top: 0; left: 0; width: 10%; max-height: 95vh; overflow: auto">
 					<textarea name="" id="" cols="5" class="textarea" v-model="rangeNumber.generated" style="height: 100vh;" placeholder="Generated numbers"></textarea>
 					<button class="button" @click.prevent="quickSearch">Filter</button>
 				</div>
-				<div class="column">					
-					<label class="checkbox">
-				  		<input type="checkbox" v-model="rangeNumber.appendMode">
-				  			Append
-						</label>
-					</div>
-					<button class="button" @click.prevent="generateZcode">Generate</button>					
+
+				<div class="mr-2">
+					<input class="input" type="number" placeholder="From" v-model="rangeNumber.from" min="0" max="99">
 				</div>
+				<div class="mr-2">
+					<input class="input" type="number" placeholder="To" v-model="rangeNumber.to"  min="0" max="99">
+				</div>				
+				<div class="mr-2 is-flex mb-2">
+					<label class="checkbox mr-2">
+				  		<input type="checkbox" v-model="rangeNumber.appendMode">
+				  		Append
+					</label>					
+					<label class="checkbox mr-2">
+				  		<input type="checkbox" v-model="rangeNumber.isStrict">
+				  		Strict
+					</label>
+					<button class="button" @click.prevent="generateZcode">Generate</button>
+				</div>
+			</div>
 			<div class="field">
 				<input class="input" type="text" placeholder="Comma separated zipcodes" v-model="q" @keyup.enter="filterZcode">
 			</div>
@@ -78,6 +84,7 @@
 						from: 10,
 						to: 99,
 						appendMode: true,
+						isStrict: true,
 						generated: []
 					},
 					shake: false,
@@ -126,7 +133,12 @@
 
 					this.filtered = this.zipcodes.filter((item) => {
 						const regex = new RegExp(this.regexPattern, 'g');
-						return String(item.Code_postal).match(regex)
+						if (this.rangeNumber.isStrict) {
+							return String(item.Code_postal).match(regex) && String(item.Code_postal).length === 5	
+						} else {
+							return String(item.Code_postal).match(regex)
+						}
+						
 					});
 					this.shake = true;
 					setTimeout(() => {
