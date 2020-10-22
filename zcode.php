@@ -99,7 +99,7 @@
 				filteredFormated: {
 					get() {
 						const f = this.filtered.map((item) => {
-							return item.Code_postal
+							return item.code_postal
 						});
 						return f;
 					},
@@ -115,7 +115,7 @@
 					}
 					if (!this.rangeNumber.appendMode) {
 						this.rangeNumber.generated = [];
-					}					
+					}
 					this.range(this.rangeNumber.from, this.rangeNumber.to).map(item => {
 						this.rangeNumber.generated.push(item)
 					})					
@@ -134,9 +134,9 @@
 					this.filtered = this.zipcodes.filter((item) => {
 						const regex = new RegExp(this.regexPattern, 'g');
 						if (this.rangeNumber.isStrict) {
-							return String(item.Code_postal).match(regex) && String(item.Code_postal).length === 5	
+							return String(item.code_postal).match(regex) && String(item.code_postal).length === 5	
 						} else {
-							return String(item.Code_postal).match(regex)
+							return String(item.code_postal).match(regex)
 						}
 						
 					});
@@ -148,6 +148,11 @@
 				range(start, end) {
 				    var ans = [];
 				    for (let i = start; i <= end; i++) {
+				    	console.log('----------------->', String(i).length)
+				    	if (String(i).length === 1) {
+				    		i = '0' + String(i);
+				    		console.log('==================>')
+				    	}
 				        ans.push(i);
 				    }
 				    return ans;
