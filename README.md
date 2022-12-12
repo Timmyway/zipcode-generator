@@ -1,4 +1,4 @@
-# Foobar
+# Zipcode-generator
 
 Application to generate postal codes.
 
